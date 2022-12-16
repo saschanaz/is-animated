@@ -1,32 +1,43 @@
-# is-animated
+# is-file-animated
 
 [![npm][npm-image]][npm-url]
-[![travis][travis-image]][travis-url]
-[![coverage][coveralls-image]][coveralls-url]
+[![ci][ci-image]][ci-url]
 [![standard][standard-image]][standard-url]
 [![standard version][standard-version-image]][standard-version-url]
 
-**is-animated** is a simple library for detecting animated images, it supports not only GIFs, but also APNG and WebP images.
+**is-file-animated** is a simple library for detecting animated GIF/PNG/WebP images from Blob/File or fs.FileHandle.
 
 ## Install
 
 ```
-npm install is-animated
+npm install is-file-animated
 ```
 
 ## Example
 
+On browsers and similar environments:
+
 ```js
-const fs = require('fs')
-const isAnimated = require('is-animated')
+import isAnimated from 'https://cdn.jsdelivr.net/npm/is-file-animated/+esm'
+
+const response = await fetch(url)
+
+const blob = await response.blob()
+const answer = await isAnimated(blob) ? 'Yes' : 'No'
+console.log(`Is "${url}" animated? ${answer}.`)
+```
+
+On Node.js:
+
+```js
+import { open } from 'fs/promises'
+import isAnimated from 'is-file-animated'
 
 const filename = process.argv[2]
 
-fs.readFile(filename, (err, buffer) => {
-  const answer = isAnimated(buffer) ? 'Yes' : 'No'
-  console.log(`Is "${filename}" animated? ${answer}.`)
-})
-
+const handle = await open(filename)
+const answer = await isAnimated(handle) ? 'Yes' : 'No'
+console.log(`Is "${filename}" animated? ${answer}.`)
 ```
 
 ## License
@@ -34,15 +45,13 @@ fs.readFile(filename, (err, buffer) => {
 [MIT](LICENSE.md)
 
 
-[npm-image]: https://img.shields.io/npm/v/is-animated.svg
-[npm-url]: https://www.npmjs.com/package/is-animated
-[travis-image]: https://img.shields.io/travis/qzb/is-animated.svg
-[travis-url]: https://travis-ci.org/qzb/is-animated
+[npm-image]: https://img.shields.io/npm/v/is-file-animated.svg
+[npm-url]: https://www.npmjs.com/package/is-file-animated
+[ci-image]: https://github.com/saschanaz/is-file-animated/actions/workflows/ci.yml/badge.svg?branch=main
+[ci-url]: https://github.com/saschanaz/is-file-animated/actions/workflows/ci.yml
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [standard-url]: http://npm.im/standard
 [standard-version-image]: https://img.shields.io/badge/release-standard%20version-brightgreen.svg
 [standard-version-url]: https://github.com/conventional-changelog/standard-version
-[coveralls-image]: https://img.shields.io/coveralls/qzb/is-animated/master.svg
-[coveralls-url]: https://coveralls.io/r/qzb/is-animated?branch=master
 
 

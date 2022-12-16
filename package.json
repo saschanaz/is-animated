@@ -1,7 +1,7 @@
 {
-  "name": "is-animated",
-  "version": "2.0.2",
-  "description": "Detects animated images",
+  "name": "is-file-animated",
+  "version": "1.0.0",
+  "description": "Detects animated images from file handles e.g. Blob/File or fs.FileHandle",
   "keywords": [
     "animated",
     "animated gif",
@@ -14,16 +14,16 @@
     "png",
     "webp"
   ],
-  "homepage": "https://github.com/qzb/is-animated",
+  "homepage": "https://github.com/saschanaz/is-file-animated",
   "bugs": {
-    "url": "https://github.com/qzb/is-animated/issues"
+    "url": "https://github.com/saschanaz/is-file-animated/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/qzb/is-animated.git"
+    "url": "https://github.com/saschanaz/is-file-animated.git"
   },
   "license": "MIT",
-  "author": "Józef Sokołowski <j.k.sokolowski@gmail.com>",
+  "author": "Kagami Rosylight <krosylight@proton.me>",
   "main": "lib/index.js",
   "type": "module",
   "files": [

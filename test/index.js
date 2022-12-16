@@ -5,43 +5,30 @@ import isAnimated from '../lib/index.js'
 
 var types = ['gif', 'png', 'webp']
 
+/**
+ * @param {string} type
+ * @param {string} subdir
+ * @param {boolean} animated
+ */
+function testImpl (type, subdir, animated) {
+  return (t) => {
+    const images = readdirSync(`./test/${subdir}`).filter(function (name) {
+      return extname(name).slice(1) === type
+    })
+
+    t.plan(images.length)
+
+    images.forEach(function (imgName) {
+      var buffer = readFileSync(`./test/${subdir}/${imgName}`)
+      t.equal(isAnimated(buffer), animated, imgName)
+    })
+  }
+}
+
 types.forEach(function (type) {
-  test('Test animated ' + type.toUpperCase() + ' images', function (t) {
-    var images = readdirSync('./test/animated').filter(function (name) {
-      return extname(name).slice(1) === type
-    })
+  test('Test animated ' + type.toUpperCase() + ' images', testImpl(type, 'animated', true))
 
-    t.plan(images.length)
+  test('Test static ' + type.toUpperCase() + ' images', testImpl(type, 'static', false))
 
-    images.forEach(function (imgName) {
-      var buffer = readFileSync('./test/animated/' + imgName)
-      t.true(isAnimated(buffer), imgName)
-    })
-  })
-
-  test('Test static ' + type.toUpperCase() + ' images', function (t) {
-    var images = readdirSync('./test/static').filter(function (name) {
-      return extname(name).slice(1) === type
-    })
-
-    t.plan(images.length)
-
-    images.forEach(function (imgName) {
-      var buffer = readFileSync('./test/static/' + imgName)
-      t.false(isAnimated(buffer), imgName)
-    })
-  })
-
-  test('Test invalid ' + type.toUpperCase() + ' images', function (t) {
-    var images = readdirSync('./test/invalid').filter(function (name) {
-      return extname(name).slice(1) === type
-    })
-
-    t.plan(images.length)
-
-    images.forEach(function (imgName) {
-      var buffer = readFileSync('./test/invalid/' + imgName)
-      t.false(isAnimated(buffer), imgName)
-    })
-  })
+  test('Test invalid ' + type.toUpperCase() + ' images', testImpl(type, 'invalid', false))
 })

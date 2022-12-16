@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'fs'
+import { readdir, open } from 'fs/promises'
 import { extname } from 'path'
 import test from 'tape'
 import isAnimated from '../lib/index.js'
@@ -11,17 +11,21 @@ var types = ['gif', 'png', 'webp']
  * @param {boolean} animated
  */
 function testImpl (type, subdir, animated) {
-  return (t) => {
-    const images = readdirSync(`./test/${subdir}`).filter(function (name) {
+  return async (t) => {
+    const images = (await readdir(`./test/${subdir}`)).filter(function (name) {
       return extname(name).slice(1) === type
     })
 
     t.plan(images.length)
 
-    images.forEach(function (imgName) {
-      var buffer = readFileSync(`./test/${subdir}/${imgName}`)
-      t.equal(isAnimated(buffer), animated, imgName)
-    })
+    for (const imgName of images) {
+      const handle = await open(`./test/${subdir}/${imgName}`)
+      try {
+        t.equal(await isAnimated(handle), animated, imgName)
+      } finally {
+        await handle.close()
+      }
+    }
   }
 }
 

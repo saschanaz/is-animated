@@ -25,9 +25,11 @@
   "license": "MIT",
   "author": "Kagami Rosylight <krosylight@proton.me>",
   "main": "lib/index.js",
+  "types": "types/index.d.ts",
   "type": "module",
   "files": [
-    "lib"
+    "lib",
+    "types"
   ],
   "scripts": {
     "commit": "git-cz",
@@ -35,7 +37,8 @@
     "commitmsg": "commitlint -e",
     "release": "standard-version",
     "test": "standard && tape test/*.js | tap-spec",
-    "test-ci": "standard && istanbul cover --report lcovonly -- tape test/*.js | tap-spec"
+    "test-ci": "standard && istanbul cover --report lcovonly -- tape test/*.js | tap-spec",
+    "type": "tsc -p jsconfig.json"
   },
   "husky": {
     "hooks": {
@@ -58,7 +61,8 @@
     "standard": "^15.0.1",
     "standard-version": "^9.3.2",
     "tap-spec": "^2.2.2",
-    "tape": "^5.6.1"
+    "tape": "^5.6.1",
+    "typescript": "^4.9.4"
   },
   "commitlint": {
     "extends": [

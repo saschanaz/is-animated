@@ -1,6 +1,6 @@
 {
   "name": "is-file-animated",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Detects animated images from file handles e.g. Blob/File or fs.FileHandle",
   "keywords": [
     "animated",
